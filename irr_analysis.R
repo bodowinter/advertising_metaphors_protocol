@@ -225,10 +225,12 @@ kappam.fleiss(select(IRR3_step5, MetonymySam:MetonymyPaula))
 ## Combine both rounds, step 4:
 
 IRR_both_step4 <- bind_rows(IRR2_step4, IRR3_step4)
+# write_csv(IRR_both_step4, 'IRR_both_step4.csv')
 
 ## Combine both rounds, step 5:
 
 IRR_both_step5 <- bind_rows(IRR2_step5, IRR3_step5)
+# write_csv(IRR_both_step5, 'IRR_both_step5.csv')
 
 ## Calculate IRR for step 4 and 5, full data:
 
@@ -244,5 +246,35 @@ kappam.fleiss(select(IRR_both_step5, MetaphorSam:MetaphorPaula))
 
 kappam.fleiss(select(IRR_both_step4, MetonymySam:MetonymyPaula))
 kappam.fleiss(select(IRR_both_step5, MetonymySam:MetonymyPaula))
+
+
+
+##------------------------------------------------------------------
+## Observed agreements:
+##------------------------------------------------------------------
+
+## Observed agreement, round 2:
+
+sum(IRR2_step4$Sam_figop == IRR2_step4$Paula_figop) / nrow(IRR2_step4)
+sum(IRR2_step5$Sam_figop == IRR2_step5$Paula_figop) / nrow(IRR2_step5)
+
+## Observed agreement, round 3:
+
+sum(IRR3_step4$Sam_figop == IRR3_step4$Paula_figop) / nrow(IRR3_step4)
+sum(IRR3_step5$Sam_figop == IRR3_step5$Paula_figop) / nrow(IRR3_step5)
+
+## Observed agreement both:
+
+sum(IRR_both_step4$Sam_figop == IRR_both_step4$Paula_figop) / nrow(IRR_both_step4)
+sum(IRR_both_step5$Sam_figop == IRR_both_step5$Paula_figop) / nrow(IRR_both_step5)
+
+## Binomial test:
+
+binom.test(c(sum(IRR_both_step4$Sam_figop == IRR_both_step4$Paula_figop),
+	sum(IRR_both_step4$Sam_figop != IRR_both_step4$Paula_figop)), p = 1 / 6)
+
+binom.test(c(sum(IRR_both_step5$Sam_figop == IRR_both_step5$Paula_figop),
+	sum(IRR_both_step5$Sam_figop != IRR_both_step5$Paula_figop)), p = 1 / 6)
+
 
 
